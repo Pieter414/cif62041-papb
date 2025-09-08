@@ -5,5 +5,5 @@
 
 ---
 # Spesifikasi Aplikasi
-**Minimun SDK:** API 24 Nougat Android 7.0
-**Configuration:** Kotlin DSL
+**Minimun SDK:** API 24 Nougat Android 7.0  
+**Configuration:** Kotlin DSL  
