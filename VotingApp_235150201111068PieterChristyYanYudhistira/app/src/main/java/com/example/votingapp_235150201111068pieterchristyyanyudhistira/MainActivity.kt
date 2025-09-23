@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.*
@@ -36,36 +38,119 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Composable()
+fun Title() {
+    Text(
+        text = "Voting Mawapres 2025",
+        style = MaterialTheme.typography.headlineMedium,
+        fontSize = 25.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = FontFamily.SansSerif,
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(
+        text = "Pilih Jagoanmu Untuk Maju!✨",
+        style = MaterialTheme.typography.bodyMedium,
+        fontSize = 16.sp,
+    )
+    Spacer(modifier = Modifier.height(49.dp))
+}
+
+@Composable
+fun PilihButton(voter: Int){
+    Button(
+        onClick = {},
+        modifier = Modifier
+            .width(270.dp)
+            .height(43.dp)
+        ,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF8A38F5),
+        ),
+        contentPadding = PaddingValues(0.dp),
+        shape = RoundedCornerShape(16.dp)
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(
+                text = "Pilih",
+                fontSize = 16.sp,
+                color = Color.White,
+            )
+        }
+    }
+    Spacer(modifier = Modifier.height(30.dp))
+    Text(
+        text = "Sisa Vote: $voter",
+        style = MaterialTheme.typography.bodySmall,
+        fontSize = 20.sp,
+    )
+}
+
+@Composable
+fun VoterButton(nama: String, nim: String){
+    Button(
+        onClick = {},
+        modifier = Modifier
+            .width(303.dp)
+            .height(100.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.White,
+        ),
+        contentPadding = PaddingValues(0.dp),
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(1.dp, Color.Black)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 20.dp, top = 20.dp, bottom = 20.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = "$nama",
+                fontWeight = FontWeight.Bold,
+                fontSize = 25.sp,
+                color = Color.Black,
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = "$nim",
+                fontSize = 20.sp,
+                color = Color.Black,
+            )
+        }
+    }
+}
+
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     val namaMahasiswa = name
+    var voter = 0
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
     ) {
-        Image(
-            painter = painterResource(R.drawable.profile),
-            contentDescription = "Gambar Profil",
-            modifier = Modifier
-                .size(150.dp)
-                .clip(CircleShape)
-                .border(2.dp, Color.Gray, CircleShape)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Halo, $namaMahasiswa!",
-            style = MaterialTheme.typography.headlineMedium,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = "Selamat datang di aplikasi saya!",
-            style = MaterialTheme.typography.bodyMedium,
-            fontSize = 16.sp,
-            color = Color.Gray
-        )
+        Title()
+
+        VoterButton("Andi", "235150000001")
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        VoterButton("Budi", "235150000002")
+        Spacer(modifier = Modifier.height(40.dp))
+
+        VoterButton("Cindi", "235150000003")
+        Spacer(modifier = Modifier.height(88.dp))
+
+        PilihButton(voter)
     }
 }
 
