@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.votingapp_235150201111068pieterchristyyanyudhistira.ui.theme.VotingApp_235150201111068PieterChristyYanYudhistiraTheme
 
+var counter = mutableStateOf(1)
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    GreetingPreview()
+                    VoteAppPreview()
                 }
             }
         }
@@ -93,13 +95,20 @@ fun PilihButton(voter: Int){
 
 @Composable
 fun VoterButton(nama: String, nim: String){
+    var isClicked by remember { mutableStateOf(false) }
+
     Button(
-        onClick = {},
+        onClick = {
+            if (counter.value == 1 || isClicked){
+                isClicked = !isClicked
+                counter.value = if (isClicked) 0 else 1
+            }
+        },
         modifier = Modifier
             .width(303.dp)
             .height(100.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.White,
+            containerColor = if (isClicked) Color(0xFF8A38F5) else Color.White,
         ),
         contentPadding = PaddingValues(0.dp),
         shape = RoundedCornerShape(16.dp),
@@ -116,23 +125,20 @@ fun VoterButton(nama: String, nim: String){
                 text = "$nama",
                 fontWeight = FontWeight.Bold,
                 fontSize = 25.sp,
-                color = Color.Black,
+                color = if (isClicked) Color.White else Color.Black,
             )
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = "$nim",
                 fontSize = 20.sp,
-                color = Color.Black,
+                color = if (isClicked) Color.White else Color.Black,
             )
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val namaMahasiswa = name
-    var voter = 0
-
+fun VoteApp(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -150,14 +156,14 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         VoterButton("Cindi", "235150000003")
         Spacer(modifier = Modifier.height(88.dp))
 
-        PilihButton(voter)
+        PilihButton(counter.value)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun VoteAppPreview() {
     VotingApp_235150201111068PieterChristyYanYudhistiraTheme {
-        Greeting("Android")
+        VoteApp()
     }
 }
