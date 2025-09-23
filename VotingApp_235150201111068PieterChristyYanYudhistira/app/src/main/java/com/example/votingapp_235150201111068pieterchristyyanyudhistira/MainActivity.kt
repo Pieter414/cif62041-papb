@@ -108,7 +108,7 @@ fun VoterButton(nama: String, nim: String){
             .width(303.dp)
             .height(100.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (isClicked) Color(0xFF8A38F5) else Color.White,
+            containerColor = if (isClicked) Color(0xFF8A38F5) else Color.Transparent,
         ),
         contentPadding = PaddingValues(0.dp),
         shape = RoundedCornerShape(16.dp),
