@@ -22,7 +22,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.votingapp_235150201111068pieterchristyyanyudhistira.ui.theme.VotingApp_235150201111068PieterChristyYanYudhistiraTheme
 
+enum class Vote {
+    EMPTY, UNCHOSEN, CHOSEN
+}
+
 var counter = mutableStateOf(1)
+var isEmptyVote = mutableStateOf(Vote.EMPTY)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,14 +65,22 @@ fun Title() {
 
 @Composable
 fun PilihButton(voter: Int){
+    var isVoted by remember { mutableStateOf(true) }
+
     Button(
-        onClick = {},
+        onClick = {
+            if (counter.value > 0 || isEmptyVote.value == Vote.UNCHOSEN){
+                counter.value = 0
+                isEmptyVote.value = Vote.CHOSEN
+                isVoted = false
+            }
+        },
         modifier = Modifier
             .width(270.dp)
             .height(43.dp)
         ,
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF8A38F5),
+            containerColor = if (isVoted) Color(0xFF8A38F5) else Color(0xFF6b747c),
         ),
         contentPadding = PaddingValues(0.dp),
         shape = RoundedCornerShape(16.dp)
@@ -99,9 +112,13 @@ fun VoterButton(nama: String, nim: String){
 
     Button(
         onClick = {
-            if (counter.value == 1 || isClicked){
+            if (isEmptyVote.value == Vote.EMPTY){
+                isEmptyVote.value = Vote.UNCHOSEN
                 isClicked = !isClicked
-                counter.value = if (isClicked) 0 else 1
+            }
+            else if (isEmptyVote.value == Vote.UNCHOSEN && isClicked){
+                isEmptyVote.value = Vote.EMPTY
+                isClicked = !isClicked
             }
         },
         modifier = Modifier
